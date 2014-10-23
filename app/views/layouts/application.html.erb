@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>FirebaseSandbox</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= content_for?(:title) ? yield(:title) : "Firebase Sandbox" %></title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "vendor/modernizr" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <script src="https://cdn.firebase.com/js/client/1.1.2/firebase.js"></script>
 </head>
 <body>
-	<script type="text/javascript">
-		var data = new Firebase('https://resplendent-inferno-165.firebaseIO.com/')
-	</script>
-
-<%= yield %>
-
+  <script type="text/javascript">
+          var data = new Firebase('https://resplendent-inferno-165.firebaseIO.com/')
+  </script>
+  <%= yield %>
 </body>
 </html>
