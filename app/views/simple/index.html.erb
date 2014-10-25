@@ -11,6 +11,7 @@
 	});
 	function displayCounter(name, count, key) {
 		console.log('appending li');
+
 		$('<button/>', {
 			text: "Add",
 			click: function() {
@@ -19,10 +20,24 @@
 					return current_count + 1;
 				});
 			}
+
 		}).appendTo($('<li/>', {
 			id: key,
 			text: name + ':' + count
 		}).appendTo($("#counters")));
+
+		$('<button/>', {
+			text: "Subtract",
+			click: function() {
+				console.log("adding to " + key);
+				data.child(key + '/count').transaction(function (current_count) {
+					if (current_count == 0)
+						return current_count;
+					else
+						return current_count - 1;
+				})
+			}
+		}).appendTo($('#' + key));
 	};
 
 	data.on('child_changed', function (snapshot) {
@@ -46,5 +61,19 @@
 			}
 			)
 		);
+		$('#' + snapshot.name()).append(
+				$('<button/>', {
+					text: "Subtract",
+					click: function() {
+						console.log("subtracting");
+						data.child(snapshot.name() + '/count').transaction(function (current_count) {
+							if (current_count <= 0)
+								return 0;
+							else
+								return current_count - 1;
+						})
+					}
+				})
+			);
 	});
 </script>
