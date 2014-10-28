@@ -3,6 +3,7 @@
 <ul id='counters'>
 </ul>
 <script type="text/javascript">
+$(document).ready(function () {
 	data.on('child_added', function(snapshot, prev) {
 		var counter = snapshot.val();
 		console.log("child_added - " + counter.counter + ":" + counter.count);
@@ -63,6 +64,7 @@
 				})
 			);
 	});
+});
 </script>
 <script type="text/javascript">
 	$('#hn').click(function () {
