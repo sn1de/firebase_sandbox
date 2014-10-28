@@ -1,4 +1,5 @@
 <h1>All Counters</h1>
+<button id="hn">Not Here Now</button>
 <ul id='counters'>
 </ul>
 <script type="text/javascript">
@@ -16,9 +17,7 @@
 			text: "Add",
 			click: function() {
 				console.log("adding to " + key);
-				data.child(key + '/count').transaction(function (current_count) {
-					return current_count + 1;
-				});
+				data.child(key + '/count').transaction(increment_count_txn);
 			}
 
 		}).appendTo($('<li/>', {
@@ -30,12 +29,7 @@
 			text: "Subtract",
 			click: function() {
 				console.log("adding to " + key);
-				data.child(key + '/count').transaction(function (current_count) {
-					if (current_count == 0)
-						return current_count;
-					else
-						return current_count - 1;
-				})
+				data.child(key + '/count').transaction(decrement_count_txn)
 			}
 		}).appendTo($('#' + key));
 	};
@@ -54,9 +48,7 @@
 				text: "Add",
 				click: function() {
 					console.log("replacing " + snapshot.name());
-					data.child(snapshot.name() + '/count').transaction(function (current_count) {
-						return current_count + 1;
-					});
+					data.child(snapshot.name() + '/count').transaction(increment_count_txn);
 				}
 			}
 			)
@@ -66,14 +58,14 @@
 					text: "Subtract",
 					click: function() {
 						console.log("subtracting");
-						data.child(snapshot.name() + '/count').transaction(function (current_count) {
-							if (current_count <= 0)
-								return 0;
-							else
-								return current_count - 1;
-						})
+						data.child(snapshot.name() + '/count').transaction(decrement_count_txn)
 					}
 				})
 			);
+	});
+</script>
+<script type="text/javascript">
+	$('#hn').click(function () {
+		$(this).text(here_now());
 	});
 </script>
