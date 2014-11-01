@@ -1,7 +1,6 @@
 <h1>All Counters</h1>
 <button id="hn">Not Here Now</button>
-<ul id='counters'>
-</ul>
+<ul id='counters'></ul>
 <script type="text/javascript">
 $(document).ready(function () {
 	data.on('child_added', function(snapshot, prev) {
@@ -9,22 +8,15 @@ $(document).ready(function () {
 		displayCounter(counter.counter, counter.count, snapshot.name());
 	});
 	function displayCounter(name, count, key) {
-		$('<button/>', {
-			text: "Add",
-			click: function() {
-				data.child(key + '/count').transaction(fxn.increment_count);
-			}
-		}).appendTo($('<li/>', {
-			id: key,
-			text: name + ':' + count
-		}).appendTo($("#counters")));
+		counter_button("Add", data.child(key + '/count'), fxn.increment_count)
+			.appendTo($('<li/>', {
+				id: key,
+				text: name + ':' + count
+			})
+			.appendTo($("#counters")));
 
-		$('<button/>', {
-			text: "Subtract",
-			click: function() {
-				data.child(key + '/count').transaction(fxn.decrement_count);
-			}
-		}).appendTo($('#' + key));
+		counter_button("Subtract", data.child(key + '/count'), fxn.decrement_count)
+			.appendTo($('#' + key));
 	};
 
 	data.on('child_changed', function (snapshot) {
@@ -35,23 +27,10 @@ $(document).ready(function () {
 				text: counter.counter + ':' + counter.count
 			})
 		);
-		$('#' + snapshot.name()).append(
-			$('<button/>', {
-				text: "Add",
-				click: function() {
-					data.child(snapshot.name() + '/count').transaction(fxn.increment_count);
-				}
-			}
-			)
-		);
-		$('#' + snapshot.name()).append(
-				$('<button/>', {
-					text: "Subtract",
-					click: function() {
-						data.child(snapshot.name() + '/count').transaction(fxn.decrement_count);
-					}
-				})
-			);
+		$('#' + snapshot.name())
+			.append(counter_button("Add", data.child(snapshot.name() + '/count'), fxn.increment_count));
+		$('#' + snapshot.name())
+			.append(counter_button("Subtract", data.child(snapshot.name() + '/count'), fxn.decrement_count));
 	});
 });
 </script>
