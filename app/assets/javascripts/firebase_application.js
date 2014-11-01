@@ -1,12 +1,12 @@
-var here_now = function () {
-	return "i am in firebase_application.js now";
-}
+// namespace for firebase transaction
 
-var increment_count_txn = function (current_count) {
+var fxn = {};
+
+fxn.increment_count = function (current_count) {
 	return current_count + 1;
 };
 
-var decrement_count_txn = function (current_count) {
+fxn.decrement_count = function (current_count) {
 	if (current_count == 0)
 		return current_count;
 	else

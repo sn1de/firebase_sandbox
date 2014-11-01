@@ -18,7 +18,7 @@ $(document).ready(function () {
 			text: "Add",
 			click: function() {
 				console.log("adding to " + key);
-				data.child(key + '/count').transaction(increment_count_txn);
+				data.child(key + '/count').transaction(fxn.increment_count);
 			}
 
 		}).appendTo($('<li/>', {
@@ -30,7 +30,7 @@ $(document).ready(function () {
 			text: "Subtract",
 			click: function() {
 				console.log("adding to " + key);
-				data.child(key + '/count').transaction(decrement_count_txn)
+				data.child(key + '/count').transaction(fxn.decrement_count);
 			}
 		}).appendTo($('#' + key));
 	};
@@ -49,7 +49,7 @@ $(document).ready(function () {
 				text: "Add",
 				click: function() {
 					console.log("replacing " + snapshot.name());
-					data.child(snapshot.name() + '/count').transaction(increment_count_txn);
+					data.child(snapshot.name() + '/count').transaction(fxn.increment_count);
 				}
 			}
 			)
@@ -59,7 +59,7 @@ $(document).ready(function () {
 					text: "Subtract",
 					click: function() {
 						console.log("subtracting");
-						data.child(snapshot.name() + '/count').transaction(decrement_count_txn)
+						data.child(snapshot.name() + '/count').transaction(fxn.decrement_count);
 					}
 				})
 			);
