@@ -6,21 +6,14 @@
 $(document).ready(function () {
 	data.on('child_added', function(snapshot, prev) {
 		var counter = snapshot.val();
-		console.log("child_added - " + counter.counter + ":" + counter.count);
-		console.log("name - " + snapshot.name());
-		console.log(counter);
 		displayCounter(counter.counter, counter.count, snapshot.name());
 	});
 	function displayCounter(name, count, key) {
-		console.log('appending li');
-
 		$('<button/>', {
 			text: "Add",
 			click: function() {
-				console.log("adding to " + key);
 				data.child(key + '/count').transaction(fxn.increment_count);
 			}
-
 		}).appendTo($('<li/>', {
 			id: key,
 			text: name + ':' + count
@@ -29,14 +22,12 @@ $(document).ready(function () {
 		$('<button/>', {
 			text: "Subtract",
 			click: function() {
-				console.log("adding to " + key);
 				data.child(key + '/count').transaction(fxn.decrement_count);
 			}
 		}).appendTo($('#' + key));
 	};
 
 	data.on('child_changed', function (snapshot) {
-		console.log("changed - " + snapshot.name());
 		var counter = snapshot.val();
 		$('#' + snapshot.name()).replaceWith(
 			$('<li/>', {
@@ -48,7 +39,6 @@ $(document).ready(function () {
 			$('<button/>', {
 				text: "Add",
 				click: function() {
-					console.log("replacing " + snapshot.name());
 					data.child(snapshot.name() + '/count').transaction(fxn.increment_count);
 				}
 			}
@@ -58,7 +48,6 @@ $(document).ready(function () {
 				$('<button/>', {
 					text: "Subtract",
 					click: function() {
-						console.log("subtracting");
 						data.child(snapshot.name() + '/count').transaction(fxn.decrement_count);
 					}
 				})
